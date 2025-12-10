@@ -19,7 +19,7 @@ News about OpenID Federation is available at the OpenID Foundation website [here
 
 ## Working on the Specification
 
-To get started working on the OpenID Connect Federation specification, clone this repository and review the documentation provided in the root directory.
+To get started working on the specification, clone this repository and review the documentation provided in the root directory.
 
 ````bash
 git clone https://github.com/openid/connect-federation-1.1.git
