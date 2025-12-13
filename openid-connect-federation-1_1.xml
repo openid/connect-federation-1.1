@@ -29,18 +29,18 @@
       draft 00
     </title>
 
-    <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-      <organization abbrev="Self-Issued Consulting">Self-Issued Consulting</organization>
-      <address>
-        <email>michael_b_jones@hotmail.com</email>
-        <uri>https://self-issued.info/</uri>
-      </address>
-    </author>
-
     <author fullname="Roland Hedberg" initials="R." surname="Hedberg">
       <organization>independent</organization>
       <address>
         <email>roland@catalogix.se</email>
+      </address>
+    </author>
+
+    <author fullname="Michael B. Jones" initials="M.B." surname="Jones" role="editor">
+      <organization abbrev="Self-Issued Consulting">Self-Issued Consulting</organization>
+      <address>
+        <email>michael_b_jones@hotmail.com</email>
+        <uri>https://self-issued.info/</uri>
       </address>
     </author>
 
@@ -77,7 +77,7 @@
       </address>
     </author>
 
-    <date day="10" month="December" year="2025"/>
+    <date day="13" month="December" year="2025"/>
 
     <workgroup>OpenID Connect Working Group</workgroup>
 
