@@ -77,7 +77,7 @@
       </address>
     </author>
 
-    <date day="22" month="December" year="2025"/>
+    <date day="28" month="December" year="2025"/>
 
     <workgroup>OpenID Connect Working Group</workgroup>
 
@@ -122,99 +122,21 @@
     <section anchor="Introduction" title="Introduction">
       <t>
 	NOTE:  This specification is starting life as a copy of
-	OpenID Federation 1.0 <xref target="OpenID.Federation-1.0"/>
+	<xref target="OpenID.Federation-1.0">OpenID Federation 1.0</xref>
 	as of December 10, 2025.
 	The protocol-independent parts will be removed shortly,
 	and will live on in the
-	OpenID Federation 1.1 <xref target="OpenID.Federation-1.1"/>
+	<xref target="OpenID.Federation-1.1">OpenID Federation 1.1</xref>
 	specification.
       </t>
       <t>
-        This specification describes how two Entities that would like to
-        interact can establish trust between them by means of a trusted third party
-        called a Trust Anchor.
-        A Trust Anchor is an Entity whose main purpose is to issue statements
-        about Entities.
-        An identity federation can be realized using this specification using
-        one or more levels of authorities.
-        Examples of authorities are federation operators, organizations,
-        departments within organizations, and individual sites.
-        This
-        specification provides the basic technical trust infrastructure building
-        blocks needed to create a dynamic and distributed trust network, such as a
-        federation.
+	This specification describes how two Entities using
+	<xref target="OpenID.Core">OpenID Connect</xref> or
+	<xref target="RFC6749">OAuth 2.0</xref> can participate in
+	multilateral federations for the purpose of establishing trust,
+	using the protocol-independent Federation constructs defined in
+	<xref target="OpenID.Federation-1.1">OpenID Federation 1.1</xref>.
       </t>
-      <t>
-        Note that this specification only concerns itself with how Entities
-        in a federation get to know about each other. An organization MAY
-        be represented by more than one Entity in a federation. An Entity
-        MAY also belong to more than one federation. Determining that two
-        Entities belong to the same federation is the basis for
-        establishing trust between them in this specification.
-      </t>
-      <t>
-        Of course, the word "trust" is also used in the vernacular to
-        encompass confidence in the security, reliability, and integrity of entities
-        and their actions. This kind trust is often established through
-        empirical proof, such as past performance, security certifications,
-        or transparent operational practices, which demonstrate a track
-        record of adherence to security standards and ethical conduct.
-        To be clear, this broader meaning of trust, while important,
-        is largely beyond the scope of what this specification accomplishes.
-      </t>
-      <figure>
-	<preamble>
-	  Below is an example of two federations rooted at two different
-	  Trust Anchors with some members in common.
-	  Every Entity is able to establish mutual trust with any
-	  other Entity by means of having at least one
-	  common Trust Anchor between them.
-	  These abbreviations are used in the diagram:
-	  OpenID Provider (OP),
-	  Relying Party (RP),
-	  Resource Server (RS),
-	  and
-	  Authorization Server (AS).
-	</preamble>
-	<name>
-	  Two Coexisting Federations with Some Members in Common
-	</name>
-<!--
-  NOTE: this figure was made with ASCIIflow and its editable sources
-  are available at the following link:
-  https://asciiflow.com/#/share/eJzlVc1Kw0AQfpWw5x5ED2pvUQP2YCtpvC1I0JQWtEIM0lIKkrOHHBbJwWOPfQLxafokbn6aZHZnt5v2IrgEsruZ%2Bb7Z2fkmCzL1nwPSJaPgMQj9aPIyvR9P%2BCx8GM9Jhzz58yDknxeUvAXhK%2F9MSfe4Q8mMv89Pzvhsnu2cHvFZFMwivqDE4mPDPjbsveWTWMjYG4nSaeEfy5DxvsArHKvB5bl3Q8%2By%2B5fXA9eyKy40CGB7IWMp4o6rteYEuyJlW8P1rjNXBqnAHtfQTOGiedI6GvG41QJlQ9d%2FH6u8rc8fsdwPRI2twS3muh8aky%2FpYNTaAtZrnQp0M2nBYiDmldXre45741z1bM%2FZAmnVhAYIb69kB0WikhaqilTOKhYnxlQ7wu0mmkbma2mStmKqE1bmKRFsi7ei2yZ6FoblqiD7hgUvsjFg6uamOi7s4mDxQwbclDMoBY5wwSHhFyPHjMsjCFlHWVDUzAEUcuWQ4%2BvO7A51gTcqAoYo6l6TWSWmykHC1g80fHMMo46FZ7YlvNSdvqQuY4InKmBH88kzCzuMIYtu%2Fp9xFE0RVy26a8YC%2FvpQgtnL3irXDA1VG76N7lKyJMtfPimJxQ%3D%3D)
--->
-	<artwork><![CDATA[
-.-----------------.            .-----------------.
-|  Trust Anchor A |            |  Trust Anchor B |
-'------.--.-------'            '----.--.--.------'
-       |  |                         |  |  |
-    .--'  '---. .-------------------'  |  |
-    |         | |                      |  |
-.---v.  .-----v-v------.   .-----------'  |
-| OP |  | Intermediate |   |              |
-'----'  '--.--.--.-----'   |    .---------v----.
-           |  |  |         |    | Intermediate |
-   .-------'  |  '------.  |    '---.--.--.----'
-   |          |         |  |        |  |  |
-.--v-.      .-v--.     .v--v.   .---'  |  '----.
-| RP |      | RS |     | OP |   |      |       |
-'----'      '----'     '----'   |   .--v-.   .-v--.
-                                |   | RP |   | RP |
-                                |   '----'   '----'
-                                |
-                        .-------v------.
-                        | Intermediate |
-                        '----.--.--.---'
-                             |  |  |
-                       .-----'  |  '----.
-                       |        |       |
-                    .--v-.   .--v-.   .-v--.
-                    | OP |   | RP |   | AS |
-                    '----'   '----'   '----'
-]]>
-        </artwork>
-      </figure>
 
       <section anchor="requirements-language" title="Requirements Notation and Conventions">
         <t>
@@ -244,540 +166,78 @@
 	  "Grant Type", "Protected Resource", "Redirection URI", "Refresh Token",
 	  "Resource Server (RS)", and "Token Endpoint"
 	  defined by <xref target="RFC6749">OAuth 2.0</xref>.
-
-        </t>
-        <t>
-          This specification also defines the following terms:
-          <list style="hanging">
-            <t hangText="Entity">
-              <vspace/>
-              Something that has a separate and distinct existence and that can
-              be identified in a context.
-            </t>
-            <t hangText="Entity Identifier">
-              <vspace/>
-              A globally unique string identifier that is bound to one Entity.
-	      All Entity Identifiers defined by this specification are
-	      URLs that use the <spanx style="verb">https</spanx> scheme,
-	      have a host component, and MAY contain port and path components.
-	      It MUST NOT contain query parameter or fragment components.
-	      Profiles of this specification MAY define other kinds of
-	      Entity Identifiers and processing rules that accompany them.
-            </t>
-            <t hangText="Trust Anchor">
-              <vspace/>
-              An Entity that represents a trusted third party.
-            </t>
-            <t hangText="Federation Entity">
-              <vspace/>
-              An Entity for which it is possible to construct a Trust Chain
-              from the Entity to a Trust Anchor.
-            </t>
-            <t hangText="Entity Statement">
-              <vspace/>
-              A signed JWT that contains the information needed
-              for an Entity to participate in federation(s),
-              including metadata about itself
-              and policies that apply to other Entities for which it is authoritative.
-            </t>
-            <t hangText="Entity Configuration">
-              <vspace/>
-              An Entity Statement issued by an Entity about itself. It contains
-              the Entity's signing keys and further data used to control the
-              Trust Chain resolution process, such as authority hints.
-            </t>
-            <t hangText="Subordinate Statement">
-              <vspace/>
-              An Entity Statement issued by a Superior Entity about
-	      an Entity that is its Immediate Subordinate.
-            </t>
-            <t hangText="Entity Type">
-              <vspace/>
-              A role and function that an Entity plays
-              within a federation. An Entity MUST be of at
-              least one type and MAY be of many types.
-              For example, an Entity can be both an OpenID Provider
-              and Relying Party at the same time.
-            </t>
-            <t hangText="Entity Type Identifier">
-              <vspace/>
-              String identifier for an Entity Type.
-            </t>
-            <t hangText="Federation Operator">
-              An organization that is authoritative for a federation.
-              A federation operator administers the Trust Anchor(s) for Entities in its federation.
-            </t>
-            <t hangText="Intermediate Entity">
-              <vspace/>
-              An Entity that issues
-              an Entity Statement appearing somewhere in between those
-              issued by the Trust Anchor and the subject of a Trust Chain
-	      (which is typically a Leaf Entity).
-              The terms Intermediate Entity and Intermediate are used
-              interchangeably in this specification.
-            </t>
-            <t hangText="Leaf Entity">
-              <vspace/>
-	      An Entity with no Subordinate Entities.
-	      Leaf Entities typically play a protocol role,
-	      such as an OpenID Connect Relying Party or OpenID Provider.
-	      The terms Leaf Entity and Leaf
-	      are used interchangeably in this specification.
-            </t>
-            <t hangText="Subordinate Entity">
-              <vspace/>
-	      An Entity that is somewhere below a Superior Entity
-	      (a Trust Anchor or Intermediate) in the trust hierarchy,
-	      possibly with Intermediates between them.
-	      The terms Subordinate Entity and Subordinate
-	      are used interchangeably in this specification.
-            </t>
-            <t hangText="Superior Entity">
-              <vspace/>
-	      An Entity that is somewhere above one or more Entities
-	      (a Leaf or Intermediate) in the trust hierarchy,
-	      possibly with Intermediates between them.
-	      The terms Superior Entity and Superior
-	      are used interchangeably in this specification.
-            </t>
-	    <t hangText="Immediate Subordinate Entity">
-	      <vspace/>
-	      An Entity that is immediately below a Superior Entity
-	      in the trust hierarchy, with no Intermediates between them.
-	      The terms Immediate Subordinate Entity and Immediate Subordinate
-	      are used interchangeably in this specification.
-	    </t>
-	    <t hangText="Immediate Superior Entity">
-	      <vspace/>
-	      An Entity that is immediately above one or more Subordinate Entities
-	      in the trust hierarchy, with no Intermediates between them.
-	      The terms Immediate Superior Entity and Immediate Superior
-	      are used interchangeably in this specification.
-	    </t>
-            <t hangText="Federation Entity Discovery">
-              <vspace/>
-              A process that starts with the Entity Identifier
-	      for the subject of the Trust Chain and collects
-              Entity Statements until the chosen Trust Anchor is reached.
-              From the collected Entity Statements, a Trust Chain
-              is constructed and verified.
-              The result of the Federation Entity Discovery is that the
-              metadata for the Trust Chain subject is constructed from the Trust Chain.
-            </t>
-            <t hangText="Trust Chain">
-              <vspace/>
-              A sequence of Entity Statements that represents a chain
-              starting at an Entity Configuration that is the subject of the chain
-	      (typically of a Leaf Entity) and ending in a Trust Anchor.
-            </t>
-            <t hangText="Trust Mark">
-              Statement of conformance to a
-              well-scoped set of trust and/or interoperability requirements
-              as determined by an accreditation authority.
-              Each Trust Mark has a Trust Mark type identifier.
-            </t>
-            <t hangText="Trust Mark Issuer">
-              A Federation Entity that issues Trust Marks.
-            </t>
-            <t hangText="Trust Mark Owner">
-              An Entity that owns the right to a Trust Mark type identifier.
-            </t>
-            <t hangText="Federation Entity Keys">
-              Keys used for the cryptographic signatures required by
-              the trust mechanisms defined in this specification.
-              Every participant in a Federation publishes its public
-              Federation Entity Keys in its Entity Configuration.
-            </t>
-            <t hangText="Resolved Metadata">
-              The metadata that results from applying the metadata policy
-              in the Trust Chain to the metadata in the Entity Configuration
-              for the subject of the Trust Chain. The Resolved Metadata
-              is the metadata that is used when interacting with
-              the Entity.
-            </t>
-          </list>
+	  It incorporates the terms defined in
+	  <relref section="1.2" relative="#Terminology" target="OpenID.Federation-1.1"/>
+	  by reference.
         </t>
       </section>
     </section>
 
     <section title="Overall Architecture" anchor="architecture">
       <t>
-        The basic component is the Entity Statement, which is a cryptographically
-        signed <xref target="RFC7519">JSON Web Token (JWT)</xref>.
-        A set of Entity Statements can form a path from an Entity
-	(typically a Leaf Entity) to
-        a Trust Anchor. Entity Configurations
-        issued by Entities about themselves control the Trust Chain
-        resolution process.
+	This specification defines how the
+	protocol-independent Federation constructs defined in
+	<xref target="OpenID.Federation-1.1">OpenID Federation 1.1</xref>
+	can be used with the
+	<xref target="OpenID.Core">OpenID Connect</xref> and
+	<xref target="RFC6749">OAuth 2.0</xref> protocols.
+	Those constructs include Entity Statements, Trust Chains,
+	Trust Anchors, Metadata, and Trust Marks.
       </t>
       <t>
-        The Entity Configuration of a Leaf or Intermediate Entity contains one or more
-        references to its Immediate Superiors in the
-	<spanx style="verb">authority_hints</spanx> parameter
-	described in <xref target="authority_hints"/>.
-        These references can be used to download the Entity Configuration of each Immediate Superior.
-        One or more Entity Configurations are traversed during the Federation Entity Discovery
-        until the Trust Anchor is reached.
-      </t>
-      <t>
-        The Trust Anchor and its Intermediates issue Entity Statements
-        about their Immediate Subordinate Entities called Subordinate Statements.
-	The sequence of Entity Configurations
-        and Subordinate Statements that validate the relationship between
-        a Superior and a Subordinate, along a path towards the Trust Anchor,
-        forms the proof that the subject of Trust Chain
-	(typically a Leaf Entity) is a member of
-        the federation rooted at the Trust Anchor.
-      </t>
-      <t>
-        The Trust Chain that links the Entity Configurations to one another
-	is verified with the signature of each Entity Configuration,
-	as described in <xref target="trust_chain"/>.
-      </t>
-      <t>
-        Once there is a verified Trust Chain, the federation policy is applied
-        and the metadata for the Trust Chain subject
-	within the Federation is derived,
-        as described in <xref target="federation_policy"/>.
-      </t>
-      <t>
-        This specification deals with trust operations;
-        it does not cover or touch protocol operations
-        other than metadata derivation and exchange.
-        In OpenID Connect terms, these are the protocol operations specified in
-        <xref target="OpenID.Discovery">OpenID Connect Discovery 1.0</xref>
-        and
-        <xref target="OpenID.Registration">OpenID Connect Dynamic Client Registration 1.0</xref>.
-      </t>
-      <t>
-        OpenID Connect is used in many of the examples in this
-        specification, however this does not mean that this specification can only be used
-        with OpenID Connect. On the contrary, it can also be
-        used to build federations for other protocols.
+	Specifically, it defines Entity Types for OpenID Connect and OAuth 2.0
+	and metadata values for them.
+	It also defines extensions to these protocols used for establishing trust
+	with <xref target="OpenID.Federation-1.1">OpenID Federation 1.1</xref>.
       </t>
 
       <section title="Cryptographic Trust Mechanism" anchor="CryptographicTrustMechanism">
 	<t>
 	  The objects defined by this specification
 	  that are used to establish cryptographic trust between participants
-	  are secured as signed JWTs using public key cryptography.
-	  In particular, the keys used for securing these objects are managed by
-	  the Entities controlling those objects, with the public keys securing them
-	  being distributed through those objects themselves.
-	  This kind of trust mechanism has been utilized by
-	  research and academic federations for over a decade.
-	</t>
-	<t>
+	  are secured as signed JWTs using public key cryptography,
+	  as described in
+	  <relref section="2.1" relative="#CryptographicTrustMechanism" target="OpenID.Federation-1.1"/>.
 	  Note that this cryptographic trust mechanism intentionally does not rely on
 	  Web PKI / TLS <xref target="RFC9525"/> certificates for signing keys.
-	  Which TLS certificates are considered trusted can vary considerably between systems
-	  depending upon which certificate authorities are considered trusted
-	  and there have been notable examples of ostensibly trusted certificates being compromised.
-	  For those reasons, this specification explicitly eschews reliance on Web PKI
-	  in favor of self-managed public keys, in this case,
-	  keys represented as JSON Web Keys (JWKs) <xref target="RFC7517"/>.
 	</t>
       </section>
     </section>
 
       <section anchor="entity-statement" title="Entity Statement">
         <t>
-          An Entity Statement contains the information needed for the Entity
-          that is the subject of the Entity Statement to participate in federation(s).
-          An Entity Statement is a signed JWT.
-          The subject of the JWT is the Entity itself.
-          The issuer of the JWT is the party that issued the Entity Statement.
-          All Entities in a federation publish an Entity Statement about themselves
-          called an Entity Configuration.
-          Superior Entities in a federation publish Entity Statements about
-          their Immediate Subordinate Entities called Subordinate Statements.
-        </t>
-        <t>
-          Entity Statement JWTs MUST be explicitly typed, by setting the
-          <spanx style="verb">typ</spanx> header parameter to
-          <spanx style="verb">entity-statement+jwt</spanx> to prevent
-          cross-JWT confusion, per Section 3.11 of <xref target="RFC8725"/>.
-          Entity Statements without a <spanx style="verb">typ</spanx> header parameter
-          or with a different <spanx style="verb">typ</spanx> value MUST be rejected.
-        </t>
-        <t>
-          The Entity Statement is signed using one of the private keys of the issuer
-          Entity in the form of a <xref target="RFC7515">JSON Web Signature
-          (JWS)</xref>.
-          Implementations SHOULD support signature verification with
-          the RSA SHA-256 algorithm because OpenID Connect Core
-          requires support for it (<spanx style="verb">alg</spanx>
-          value of <spanx style="verb">RS256</spanx>).
-          Federations MAY also specify different mandatory-to-implement algorithms.
-          Note that a Trust Chain can contain Entity Statements signed using different
-          signing algorithms, as long as each signature uses a signature algorithm
-          supported by the trust framework and implementations in use.
-        </t>
-	<t>
-	  Entity Statement JWTs MUST include the
-	  <spanx style="verb">kid</spanx> (Key ID) header parameter
-	  with its value being the Key ID of the signing key used.
+	  Entity Statements are used in this specification as defined in
+	  <relref section="3" relative="#entity-statement" target="OpenID.Federation-1.1"/>.
 	</t>
-        <t>
-          The Claims in an Entity Statement are listed below.
-          Applications and protocols utilizing Entity Statements MAY specify
-          and use additional Claims.
+
+	<section anchor="ESClaims" title="Entity Statement Claims">
+
+	<t>
+	  This specification defines the following additional Claims
+	  for use in Entity Statements.
         </t>
 
 	<section title="Claims that MUST or MAY Appear in both Entity Configurations and Subordinate Statements"
 		 anchor="common-claims">
-
+	  <!-- DELETE? -->
         <t>
-          <list style="hanging">
-            <t hangText="iss">
-              <vspace/>
-              REQUIRED. The Entity Identifier of the issuer of
-              the Entity Statement.
-	      If the <spanx style="verb">iss</spanx> and
-              the <spanx style="verb">sub</spanx> are identical,
-	      the issuer is making an Entity Statement about itself
-	      called an Entity Configuration.
-            </t>
-            <t hangText="sub">
-              <vspace/>
-              REQUIRED. The Entity Identifier of the subject.
-            </t>
-            <t hangText="iat">
-              <vspace/>
-              REQUIRED. Number. Time when this statement was issued.
-                This is expressed as Seconds Since the Epoch, per
-                <xref target="RFC7519"/>.
-            </t>
-            <t hangText="exp">
-              <vspace/>
-              REQUIRED. Number.
-              Expiration time after which the statement MUST NOT be
-              accepted for processing. This is expressed as Seconds
-              Since the Epoch, per <xref target="RFC7519"/>.
-            </t>
-            <t hangText="jwks">
-              <vspace/>
-              REQUIRED. A <xref target="RFC7517">JSON Web Key Set (JWKS)</xref>
-              representing the public part of the subject's Federation Entity
-              signing keys. The corresponding private key is
-              used by the Entity to sign the Entity Configuration about itself,
-              by Trust Anchors and Intermediate Entities
-	      to sign Subordinate Statements about their Immediate Subordinates,
-	      and for other signatures made by Federation Entities,
-	      such as Trust Mark signatures.
-              However, this claim is OPTIONAL for the Entity Statement returned
-              as an Explicit Registration Response, as defined in <xref target="cliregresp"/>;
-              in all other cases, it is REQUIRED.
-              Every JWK in the JWK Set MUST have a unique <spanx style="verb">kid</spanx> (Key ID) value.
-              It is RECOMMENDED that the Key ID be the JWK Thumbprint <xref target="RFC7638"/>
-              using the SHA-256 hash function of the key.
-	      <vspace blankLines="1"/>
-	      These Federation Entity Keys SHOULD NOT be used in other protocols.
-	      (Keys to be used in other protocols, such as OpenID Connect,
-	      are conveyed in the <spanx style="verb">metadata</spanx> elements
-	      for the protocol's Entity Type Identifiers,
-	      such as the metadata under the
-	      <spanx style="verb">openid_provider</spanx> and
-	      <spanx style="verb">openid_relying_party</spanx>
-	      Entity Type Identifiers.)
-            </t>
-            <t hangText="metadata">
-              <vspace/>
-              OPTIONAL.
-              JSON object that declares roles that the Entity plays -
-              its Entity Types - and that contains metadata for those Entity Types.
-              Each member name of the JSON
-              object is an Entity Type Identifier, and each value MUST be a JSON
-              object containing metadata parameters according to the metadata
-              schema of the Entity Type.
-              <vspace blankLines="1" />
-              When an Entity participates in a federation or federations with
-              one or more Entity Types, its Entity Configuration MUST contain a
-              <spanx style="verb">metadata</spanx> Claim with JSON object values
-              for each of the corresponding Entity Type Identifiers, even if the
-              values are the empty JSON object <spanx style="verb">{}</spanx>
-              (when the Entity Type has no associated metadata or Immediate
-              Superiors supply any needed metadata).
-              <vspace blankLines="1"/>
-              An Immediate Superior MAY provide selected or all metadata
-              parameters for an Immediate Subordinate, by using the
-              <spanx style="verb">metadata</spanx> Claim in a Subordinate
-              Statement. When <spanx style="verb">metadata</spanx> is used in a
-              Subordinate Statement, it applies only to those Entity Types that
-              are present in the subject's Entity Configuration. Furthermore,
-              the metadata applies only to the subject of the Subordinate
-              Statement and has no effect on the subject's Subordinates.
-              Metadata parameters in a Subordinate Statement have precedence and
-              override identically named parameters under the same Entity Type
-              in the subject's Entity Configuration. If both
-              <spanx style="verb">metadata</spanx> and
-              <spanx style="verb">metadata_policy</spanx> appear in a
-              Subordinate Statement, then the stated
-              <spanx style="verb">metadata</spanx> MUST be applied before the
-              <spanx style="verb">metadata_policy</spanx>, as described in
-              <xref target="metadata_policy_application"/>.
-            </t>
-	    <t hangText="crit">
-              <vspace/>
-              OPTIONAL.
-	      Entity Statements require that
-	      the <spanx style="verb">crit</spanx> (critical) Claim
-	      defined in <xref target="critClaim"/> be understood and processed.
-	      Claims in the Entity Statement whose Claim Names are in the array
-	      that is the value of this Claim MUST be understood and processed.
-	      Claims specified for use in Entity Statements by this specification
-	      MUST NOT be included in the list.
-            </t>
-
-          </list>
+	  This specification defines no additional Claims of this kind.
         </t>
       </section>
 
       <section anchor="ec-specific"
 	       title="Claims that MUST or MAY Appear in Entity Configurations but Not in Subordinate Statements">
+	  <!-- DELETE? -->
 	<t>
-	  <list style="hanging">
-            <t hangText="authority_hints" anchor="authority_hints">
-              <vspace/>
-              OPTIONAL. An array of strings representing
-              the Entity Identifiers of Intermediate Entities or Trust Anchors
-              that are Immediate Superiors of the Entity.
-              This Claim is REQUIRED in Entity Configurations of
-              the Entities that have at least one Superior above them,
-              such as Leaf and Intermediate Entities.
-              Its value MUST contain the Entity Identifiers of
-	      its Immediate Superiors and
-	      MUST NOT be the empty array
-              <spanx style="verb">[]</spanx>.
-              This Claim MUST NOT be present in Entity Configurations
-              of Trust Anchors with no Superiors.
-            </t>
-            <t hangText="trust_anchor_hints" anchor="trust_anchor_hints">
-              <vspace/>
-              OPTIONAL. An array of strings representing
-              the Entity Identifiers of Trust Anchors
-              trusted by the Entity.
-              Its value MUST NOT be the empty array
-              <spanx style="verb">[]</spanx>.
-              This Claim MUST NOT be present in Entity Configurations
-              of Trust Anchors with no Superiors.
-            </t>
-            <t hangText="trust_marks">
-              <vspace/>
-              OPTIONAL. An array of JSON objects, each representing
-              a Trust Mark.
-              <list style="hanging">
-                <t hangText="trust_mark_type">
-                  REQUIRED. Identifier for the type of the Trust Mark.
-                  The value of this Claim MUST be the same as the value of the
-                  <spanx style="verb">trust_mark_type</spanx>
-                  Claim contained in the Trust Mark JWT that is the value of the
-		              <spanx style="verb">trust_mark</spanx> Claim in this object.
-                </t>
-                <t hangText="trust_mark">
-                  REQUIRED. A signed JSON Web Token that represents a Trust Mark.
-                </t>
-              </list>
-              Trust Marks are described in <xref target="trust_marks"/>.
-            </t>
-            <t hangText="trust_mark_issuers">
-              <vspace/>
-              OPTIONAL.
-              A Trust Anchor MAY use this Claim to tell which combination of
-              Trust Mark type identifiers and issuers are trusted by the federation.
-              This Claim MUST be ignored if present in an Entity Configuration
-              for an Entity that is not a Trust Anchor.
-              It is a JSON object with member names that are Trust Mark type identifiers and
-              each corresponding value being an array of Entity Identifiers
-              that are trusted to represent the accreditation authority
-              for Trust Marks with that identifier.
-              If the array following a Trust Mark type identifier is empty,
-              anyone MAY issue Trust Marks with that identifier.
-              Trust Marks are described in <xref target="trust_marks"/>.
-            </t>
-            <t hangText="trust_mark_owners">
-              <vspace/>
-              OPTIONAL.
-              If a Federation Operator knows that a Trust Mark type identifier is owned
-              by an Entity different from the Trust Mark Issuer, then that
-              knowledge MUST be expressed in this Claim.
-              This Claim MUST be ignored if present in an Entity Configuration
-              for an Entity that is not a Trust Anchor.
-              It is a JSON object with member names that are Trust Mark type identifiers and
-              each corresponding value being a JSON object with these members:
-              <list style="hanging">
-                <t hangText="sub">
-                  <vspace/>
-                  REQUIRED
-                  Identifier of the Trust Mark Owner.
-                </t>
-                <t hangText="jwks">
-                  <vspace/>
-                  REQUIRED
-                  <xref target="RFC7517">JSON Web Key Set (JWKS)</xref>
-                  containing the owner's Federation Entity Keys used for signing.
-                </t>
-              </list>
-	      Other members MAY also be defined and used.
-            </t>
-	  </list>
+	  This specification defines no additional Claims of this kind.
 	</t>
       </section>
 
       <section anchor="ss-specific"
 	       title="Claims that MUST or MAY Appear in Subordinate Statements but Not in Entity Configurations">
+	  <!-- DELETE? -->
 	<t>
-	  <list style="hanging">
-            <t hangText="constraints">
-              <vspace/>
-              OPTIONAL. JSON object that defines Trust Chain constraints, as
-              described in <xref target="chain_constraints"/>. The constraints apply to the
-              Entity that is the subject of this Subordinate Statement as well
-              as to all Entities that are Subordinate to it.
-            </t>
-	    <t hangText="metadata_policy">
-              <vspace/>
-              OPTIONAL. JSON object that defines a metadata policy, as described
-              in <xref target="metadata_policy"/>. The metadata policy applies to the Entity
-              that is the subject of this Subordinate Statement as well as to
-              all Entities that are Subordinate to it. Applying to Subordinate
-              Entities distinguishes <spanx style="verb">metadata_policy</spanx>
-              from <spanx style="verb">metadata</spanx>, which only applies to
-              the subject itself.
-            </t>
-
-	    <t hangText="metadata_policy_crit">
-              <vspace/>
-              OPTIONAL.
-              Array of strings specifying critical metadata policy operators
-              other than the standard ones defined in
-              <xref target="standard_metadata_policy_operators"/> that MUST be
-              understood and processed. When included its value MUST NOT be the empty array
-              <spanx style="verb">[]</spanx>. If any of the listed policy
-              operators are not understood and supported, then the Subordinate
-              Statement and thus the Trust Chain that includes it MUST be
-              considered invalid.
-            </t>
-            <t hangText="source_endpoint">
-              <vspace/>
-              OPTIONAL. String containing the fetch endpoint URL
-              from which the Entity Statement was issued,
-              as specified in <xref target="fetch_endpoint"/>.
-              This parameter enables an optimized refresh of the Subordinate Statements
-	      and hence the Trust Chain, by skipping the
-              request to the Entity Configuration
-              that is normally required to discover the
-              <spanx style="verb">federation_fetch_endpoint</spanx>
-              of the issuing authority.
-              If an Entity Statement cannot be retrieved from the
-	      <spanx style="verb">source_endpoint</spanx>,
-	      which can occur if the endpoint URL has changed,
-	      the current <spanx style="verb">federation_fetch_endpoint</spanx>
-	      location can be determined by retrieving
-	      the Entity Configuration of the issuer.
-            </t>
-
-	  </list>
+	  This specification defines no additional Claims of this kind.
 	</t>
       </section>
 
@@ -817,180 +277,17 @@
           </list>
         </section>
 
+	</section>
+
 	<section anchor="ESValidation" title="Entity Statement Validation">
 	  <t>
-	    Entity Statements MUST be validated in the following manner.
+	    Entity Statements MUST be validated in the manner defined in
+	    <relref section="3.2" relative="#ESValidation" target="OpenID.Federation-1.1"/>.
+	    <!-- TBD 3.2 depends upon https://github.com/openid/federation/pull/319 being merged -->
+	    These additional validation steps are defined by this specification.
 	    These steps MAY be performed in a different order, provided that
 	    the result - accepting or rejecting the Entity Statement - is the same.
 	    <list style="numbers">
-	      <t>
-		The Entity Statement MUST be a signed JWT.
-	      </t>
-	      <t>
-		The Entity Statement MUST have a
-		<spanx style="verb">typ</spanx> header parameter with the value
-		<spanx style="verb">entity-statement+jwt</spanx>.
-	      </t>
-	      <t>
-		The Entity Statement MUST have an
-		<spanx style="verb">alg</spanx> (algorithm) header parameter
-		with a value that is an acceptable JWS signing algorithm;
-		it MUST NOT be <spanx style="verb">none</spanx>.
-	      </t>
-	      <t>
-		The Entity Identifier of the Entity to which the Entity Statement refers
-		MUST match the value of the
-		<spanx style="verb">sub</spanx> (subject) Claim.
-	      </t>
-	      <t>
-		The Entity Statement MUST have an
-		<spanx style="verb">iss</spanx> (issuer) Claim
-		with a value that is a valid Entity Identifier.
-	      </t>
-	      <t>
-		When the <spanx style="verb">iss</spanx> (issuer) Claim Value
-		matches the <spanx style="verb">sub</spanx> (subject) Claim Value,
-		then the Entity Statement is this Entity's Entity Configuration.
-		When they do not match, the Entity Statement is a Subordinate Statement.
-		When the Entity Statement is a Subordinate Statement,
-		the <spanx style="verb">iss</spanx> Claim Value MUST match
-		one of the values in the
-		<spanx style="verb">authority_hints</spanx> array
-		in the Entity Configuration for the Entity whose Entity Identifier
-		is the value of the <spanx style="verb">sub</spanx> Claim;
-		otherwise, the Federation graph is not well-formed.
-	      </t>
-	      <t>
-		The current time MUST be after the time represented by the
-		<spanx style="verb">iat</spanx> (issued at) Claim
-		(possibly allowing for some small leeway to account for clock skew).
-	      </t>
-	      <t>
-		The current time MUST be before the time represented by the
-		<spanx style="verb">exp</spanx> (expiration) Claim
-		(possibly allowing for some small leeway to account for clock skew).
-	      </t>
-	      <t>
-		The <spanx style="verb">jwks</spanx> (JWK Set) Claim
-		MUST be present, with a value that is a valid
-		JWK Set <xref target="RFC7517"/>.
-	      </t>
-	      <t>
-		Obtain the Entity Configuration for the issuing Entity -
-		the Entity with the Issuer Identifier found in the Entity Statement's
-		<spanx style="verb">iss</spanx> (issuer) Claim.
-		When the <spanx style="verb">iss</spanx> and
-		<spanx style="verb">sub</spanx> Claim Values match, this is
-		the Entity Statement being validated itself.
-		Otherwise, this can be obtained either from a Trust Chain or
-		by retrieving it as described in
-		<xref target="federation_configuration"/>.
-	      </t>
-	      <t>
-		The Entity Statement's
-		<spanx style="verb">kid</spanx> (Key ID) header parameter value
-		MUST be a non-zero length string and
-		MUST exactly match the <spanx style="verb">kid</spanx> value
-		for a key in the <spanx style="verb">jwks</spanx> (JWK Set) Claim
-		of the Entity Configuration of the issuing Entity.
-	      </t>
-	      <t>
-		The Entity Statement's signature MUST validate using
-		the issuing Entity's key identified by the
-		<spanx style="verb">kid</spanx> value.
-	      </t>
-	      <t>
-		If the <spanx style="verb">crit</spanx> Claim is present,
-		then each array element in this Claim's value
-		MUST be a string representing an Entity Statement Claim
-		that is not defined by this specification
-		and that Claim MUST be understood
-		and be able to be processed by the implementation.
-	      </t>
-	      <t>
-		If the <spanx style="verb">authority_hints</spanx> Claim is present,
-		the Entity Statement MUST be an Entity Configuration.
-		Verify that its value is syntactically correct,
-		as specified in <xref target="authority_hints"/>.
-		Implementations MAY also validate that the Entity is a Subordinate
-		of each Entity whose Entity Identifier is listed in the
-		<spanx style="verb">authority_hints</spanx> array.
-	      </t>
-	      <t>
-		If the <spanx style="verb">trust_anchor_hints</spanx> Claim is present,
-		the Entity Statement MUST be an Entity Configuration.
-		Verify that its value is syntactically correct,
-		as specified in <xref target="trust_anchor_hints"/>.
-	      </t>
-	      <t>
-		If the <spanx style="verb">metadata</spanx> Claim is present,
-		verify that its value is syntactically correct,
-		not using <spanx style="verb">null</spanx> as metadata values,
-		as specified in <xref target="metadata"/>.
-	      </t>
-	      <t>
-		If the <spanx style="verb">metadata_policy</spanx> Claim is present,
-		the Entity Statement MUST be a Subordinate Statement.
-		Verify that its value is syntactically correct,
-		as specified in <xref target="metadata_policy"/>.
-	      </t>
-	      <t>
-		If the <spanx style="verb">metadata_policy_crit</spanx> Claim is present,
-		the Entity Statement MUST be a Subordinate Statement.
-		Each array element in this Claim's value
-		MUST be a string representing a Metadata Policy operator
-		that is not defined by this specification
-		and that operator MUST be understood
-		and be able to be processed by the implementation.
-	      </t>
-	      <t>
-		If the <spanx style="verb">constraints</spanx> Claim is present,
-		the Entity Statement MUST be a Subordinate Statement.
-		Verify that its value is syntactically correct,
-		as specified in <xref target="chain_constraints"/>.
-	      </t>
-	      <t>
-		If the <spanx style="verb">trust_marks</spanx> Claim is present,
-		the Entity Statement MUST be an Entity Configuration.
-		Validate that the syntax of this Claim Value conforms to the
-		Claim definition.
-		In particular, for each element of the array that is the Claim Value,
-		validate that there is a <spanx style="verb">trust_mark_type</spanx>
-		member whose value matches the
-		<spanx style="verb">trust_mark_type</spanx> Claim Value in the
-		Trust Mark JWT that is the value of the
-		<spanx style="verb">trust_mark</spanx> member.
-		Validating the syntax is separate from evaluating whether particular
-		Trust Marks are issued by a trusted party and are trusted;
-		that process is described in <xref target="trust-mark-validation"/>
-		and MAY be performed as a separate step from syntactic validation.
-	      </t>
-	      <t>
-		If the <spanx style="verb">trust_mark_issuers</spanx> Claim is present,
-		the Entity Statement MUST be an Entity Configuration.
-		Validate that its Claim Value is a JSON object with
-		Trust Mark type identifiers as the member names and
-		arrays of Entity Identifiers as the values.
-	      </t>
-	      <t>
-		If the <spanx style="verb">trust_mark_owners</spanx> Claim is present,
-		the Entity Statement MUST be an Entity Configuration.
-		Validate that its Claim Value is a JSON object with
-		Trust Mark type identifiers as the member names and
-		values that are JSON objects containing
-		a <spanx style="verb">sub</spanx> member with a value that is
-		an Entity Identifier and
-		a <spanx style="verb">jwks</spanx> member with a value that is
-		a JSON Web Key Set.
-	      </t>
-	      <t>
-		If the <spanx style="verb">source_endpoint</spanx> Claim is present,
-		the Entity Statement MUST be a Subordinate Statement.
-		Validate that its Claim Value is a URL.
-		Implementations MAY also make a fetch call to the URL
-		to validate that this is the fetch endpoint
-		from which the Entity Statement was issued.
-	      </t>
 	      <t>
 		If the <spanx style="verb">aud</spanx> Claim is present,
 		if the Entity Statement is an Explicit Registration request,
@@ -1014,24 +311,6 @@
 		This Claim MUST NOT be present in Entity Statements that are not
 		Explicit Registration responses
 		unless its use is otherwise specified in an extension being employed.
-	      </t>
-	      <t>
-		If the <spanx style="verb">trust_chain</spanx> header parameter is present,
-		validate that its value is a syntactically valid Trust Chain,
-		as specified in <xref target="trust_chain"/>.
-		The first entry in the Trust Chain
-		MUST be an Entity Configuration for this Entity.
-		Implementations SHOULD validate that the Entity Identifier
-		for the Trust Anchor at the end of the Trust Chain matches
-		one of the Trust Anchors configured for the deployment.
-	      </t>
-	      <t>
-		If the <spanx style="verb">peer_trust_chain</spanx> header parameter is present,
-		validate that its value is a syntactically valid Trust Chain,
-		as specified in <xref target="trust_chain"/>.
-		Implementations SHOULD validate that the Entity Identifier
-		for the Trust Anchor at the end of the Trust Chain matches
-		one of the Trust Anchors configured for the deployment.
 	      </t>
 	    </list>
 	  </t>
@@ -10025,6 +9304,62 @@ HTTP/1.1 302 Found
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9126.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9728.xml"/>
 
+      <reference anchor="OpenID.Federation-1.1" target="https://openid.github.io/federation-1.1/main.html">
+        <front>
+          <title>OpenID Federation 1.1</title>
+
+	  <author fullname="Roland Hedberg" initials="R." surname="Hedberg">
+	    <organization>independent</organization>
+	    <address>
+	      <email>roland@catalogix.se</email>
+	    </address>
+	  </author>
+
+	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones" role="editor">
+	    <organization abbrev="Self-Issued Consulting">Self-Issued Consulting</organization>
+	    <address>
+	      <email>michael_b_jones@hotmail.com</email>
+	      <uri>https://self-issued.info/</uri>
+	    </address>
+	  </author>
+
+	  <author fullname="Giuseppe De Marco" initials="G." surname="De Marco">
+	    <organization>independent</organization>
+	    <address>
+	      <email>demarcog83@gmail.com</email>
+	      <uri>https://www.linkedin.com/in/giuseppe-de-marco-bb054245/</uri>
+	    </address>
+	  </author>
+
+	  <author fullname="Andreas Åkre Solberg" initials="A.Å."
+		  surname="Solberg">
+	    <organization>Sikt</organization>
+	    <address>
+	      <email>Andreas.Solberg@sikt.no</email>
+	      <uri>https://www.linkedin.com/in/andreassolberg/</uri>
+	    </address>
+	  </author>
+
+	  <author fullname="John Bradley" initials="J." surname="Bradley">
+	    <organization abbrev="Yubico">Yubico</organization>
+	    <address>
+	      <email>ve7jtb@ve7jtb.com</email>
+	      <uri>https://www.linkedin.com/in/ve7jtb/</uri>
+	    </address>
+	  </author>
+
+	  <author fullname="Vladimir Dzhuvinov" initials="V." surname="Dzhuvinov">
+	    <organization>Connect2id</organization>
+	    <address>
+	      <email>vladimir@connect2id.com</email>
+	      <uri>https://twitter.com/dzhuvi</uri>
+	    </address>
+	  </author>
+
+          <date day="28" month="December" year="2025"/>
+        </front>
+      </reference>
+
       <reference anchor="OpenID.Core" target="https://openid.net/specs/openid-connect-core-1_0.html">
         <front>
           <title>OpenID Connect Core 1.0</title>
@@ -10222,62 +9557,6 @@ HTTP/1.1 302 Found
 	  </author>
 
           <date day="4" month="December" year="2025"/>
-        </front>
-      </reference>
-
-      <reference anchor="OpenID.Federation-1.1" target="https://openid.github.io/federation-1.1/main.html">
-        <front>
-          <title>OpenID Federation 1.1</title>
-
-	  <author fullname="Roland Hedberg" initials="R." surname="Hedberg">
-	    <organization>independent</organization>
-	    <address>
-	      <email>roland@catalogix.se</email>
-	    </address>
-	  </author>
-
-	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones" role="editor">
-	    <organization abbrev="Self-Issued Consulting">Self-Issued Consulting</organization>
-	    <address>
-	      <email>michael_b_jones@hotmail.com</email>
-	      <uri>https://self-issued.info/</uri>
-	    </address>
-	  </author>
-
-	  <author fullname="Giuseppe De Marco" initials="G." surname="De Marco">
-	    <organization>independent</organization>
-	    <address>
-	      <email>demarcog83@gmail.com</email>
-	      <uri>https://www.linkedin.com/in/giuseppe-de-marco-bb054245/</uri>
-	    </address>
-	  </author>
-
-	  <author fullname="Andreas Åkre Solberg" initials="A.Å."
-		  surname="Solberg">
-	    <organization>Sikt</organization>
-	    <address>
-	      <email>Andreas.Solberg@sikt.no</email>
-	      <uri>https://www.linkedin.com/in/andreassolberg/</uri>
-	    </address>
-	  </author>
-
-	  <author fullname="John Bradley" initials="J." surname="Bradley">
-	    <organization abbrev="Yubico">Yubico</organization>
-	    <address>
-	      <email>ve7jtb@ve7jtb.com</email>
-	      <uri>https://www.linkedin.com/in/ve7jtb/</uri>
-	    </address>
-	  </author>
-
-	  <author fullname="Vladimir Dzhuvinov" initials="V." surname="Dzhuvinov">
-	    <organization>Connect2id</organization>
-	    <address>
-	      <email>vladimir@connect2id.com</email>
-	      <uri>https://twitter.com/dzhuvi</uri>
-	    </address>
-	  </author>
-
-          <date day="13" month="December" year="2025"/>
         </front>
       </reference>
 
