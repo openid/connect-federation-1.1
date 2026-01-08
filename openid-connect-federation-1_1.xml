@@ -77,7 +77,7 @@
       </address>
     </author>
 
-    <date day="31" month="December" year="2025"/>
+    <date day="7" month="January" year="2026"/>
 
     <workgroup>OpenID Connect Working Group</workgroup>
 
@@ -250,7 +250,6 @@
 	  <t>
 	    Entity Statements MUST be validated in the manner defined in
 	    <relref section="3.2" relative="#ESValidation" target="OpenID.Federation-1.1"/>.
-	    <!-- TBD 3.2 depends upon https://github.com/openid/federation/pull/319 being merged -->
 	    These additional validation steps are defined by this specification.
 	    These steps MAY be performed in a different order, provided that
 	    the result - accepting or rejecting the Entity Statement - is the same.
@@ -880,7 +879,7 @@
                 (with line wraps within values for display purposes only):
               </preamble>
 	      <name>
-		Authentication Request Using Request Object
+		Authentication Request using Request Object
 	      </name>
               <artwork><![CDATA[
 Host: server.example.com
@@ -1568,12 +1567,12 @@ HTTP/1.1 302 Found
                     registration is to make a new Explicit Registration
                     request. If the RP is provisioned with a
                     <spanx style="verb">registration_access_token</spanx> for
-                    some purpose, for example to let it independently check its
+                    some purpose, for example, to let it independently check its
                     registered metadata, the token MUST NOT allow modification
                     of the registration.
                     <vspace blankLine="1"/>
 
-                    The OP MAY modify the received RP metadata, for example by
+                    The OP MAY modify the received RP metadata, for example, by
                     substituting an invalid or unsupported parameter,
                     to make it compliant with its own OP metadata and other
                     policies. If the OP does not accept the RP metadata or is
@@ -1622,7 +1621,7 @@ HTTP/1.1 302 Found
 		    The parameters MUST include the
                     <spanx style="verb">client_id</spanx> that was provisioned
                     for the RP. If the RP was provisioned with credentials,
-                    for example a <spanx style="verb">client_secret</spanx>,
+                    for example, a <spanx style="verb">client_secret</spanx>,
                     these MUST be included as well.
 		  </t>
 		  <t>
@@ -1791,7 +1790,7 @@ HTTP/1.1 302 Found
                     If the received registration Entity Statement does not pass the above
                     checks, the RP MUST reject it. The RP MAY choose to retry
                     the Explicit Registration request to work around a
-                    transient exception, for example due to a recent change of
+                    transient exception, for example, due to a recent change of
                     Entity metadata or metadata policy causing temporary
                     misalignment of metadata.
                   </t>
@@ -1799,15 +1798,14 @@ HTTP/1.1 302 Found
               </t>
             </section>
 
-        <section title="After an Explicit Client Registration" anchor="AfterExplicitReg">
+        <section title="Explicit Client Registration Lifetime" anchor="AfterExplicitReg">
           <t>
             An RP can utilize the <spanx style="verb">exp</spanx> Claim of the
             registration Entity Statement to devise a suitable strategy for
             renewing its client registration. RP implementers should note that
-            if the OP expiration of the <spanx style="verb">client_id</spanx>
-            coincides with an OAuth 2.0 flow that was just initiated by the RP, this
-            may cause OpenID Connect authentication requests, token requests, or
-            UserInfo requests to suddenly fail. Renewing the RP registration
+            if the the RP's registration has expired at the OP,
+	    this can cause OpenID Connect authentication requests, token requests,
+	    and/or UserInfo requests to fail. Renewing the RP's registration
             prior to its expiration can prevent such errors from
             occurring and ensure the end-user experience is not disrupted.
           </t>
@@ -1870,7 +1868,7 @@ HTTP/1.1 302 Found
         </t>
       </section>
 
-      <section title="Rationale for the Trust Chain in the Request" anchor="TrustChainParamRationale">
+      <section title="Rationale for Trust Chains in the Request" anchor="TrustChainRationale">
         <t>
           Both Automatic and Explicit Client Registration support
           the submission of the Trust Chain embedded in the Request,
@@ -1909,6 +1907,15 @@ HTTP/1.1 302 Found
 
 	  </list>
         </t>
+	<t>
+	  Both also support the submission of the Peer Trust Chain,
+	  which provides a Trust Chain between the OP
+	  and the Trust Anchor the RP selected.
+	  As described in <relref section="4.4" relative="#peer_trust_chain_head_param" target="OpenID.Federation-1.1"/>,
+	  inclusion of both Trust Chains enables achieving
+	  the Federation Integrity and Metadata Integrity properties,
+	  as defined in <xref target="App-Fed-Linkage"/>.
+	</t>
       </section>
 
     </section>
@@ -2415,7 +2422,7 @@ HTTP/1.1 302 Found
 	  The following depicts a federation under the eduGAIN Trust Anchor:
         </preamble>
 	<name>
-          Participants Within the eduGAIN Federation
+          Participants in the eduGAIN Federation
 	</name>
         <artwork><![CDATA[
                        eduGAIN
@@ -3162,12 +3169,10 @@ Host: geant.org
         </section>
       </section>
 
-      <section anchor="ClientRegExample" title="Examples of the Two Ways of Doing Client Registration">
+      <section anchor="ClientRegExample" title="Client Registration Method Examples">
         <t>
-          As described in
-          <xref target="client_registration"/>,
-          there are two
-          ways that can be used to do client registration:
+          <xref target="client_registration"/> defines
+          two methods for performing client registration:
           <list style="hanging">
             <t hangText="Automatic">
               <vspace/>
@@ -3197,7 +3202,7 @@ Host: geant.org
 	      Here is an example of such an Authentication Request:
 	    </preamble>
 	    <name>
-	      Authentication Request Using Automatic Client Registration
+	      Authentication Request using Automatic Client Registration
 	    </name>
             <artwork><![CDATA[
 GET /openid/authorization?
@@ -3346,7 +3351,7 @@ Host: op.umu.se
 		Next, combine these and apply them to the metadata for wiki.ligo.org:
 	      </preamble>
 	      <name>
-		Combined Metadata with Metadata Policy yet to be applied
+		Combined Metadata with Metadata Policy Yet to be Applied
 	      </name>
               <artwork><![CDATA[
 "metadata": {
@@ -3571,7 +3576,7 @@ Host: op.umu.se
 
     <section anchor="Notices" title="Notices">
       <t>
-        Copyright (c) 2025 The OpenID Foundation.
+        Copyright (c) 2026 The OpenID Foundation.
       </t>
       <t>
         The OpenID Foundation (OIDF) grants to any Contributor, developer,
@@ -3621,8 +3626,12 @@ Host: op.umu.se
 	<list style="symbols">
 	  <t>
 	    Began life as a copy of OpenID Federation 1.0 as of December 10, 2025.
-	    The protocol-independent parts will be removed shortly,
-	    and will live in the OpenID Federation 1.1 specification.
+	  </t>
+	  <t>
+	    Removed protocol-independent functionality.
+	  </t>
+	  <t>
+	    Merged in changes made to OpenID Federation 1.0 as of January 7, 2026.
 	  </t>
 	</list>
       </t>
@@ -3682,6 +3691,7 @@ Host: op.umu.se
 	Michael Schwartz,
 	Giada Sciarretta,
 	Amir Sharif,
+	Yaron Sheffer,
 	Sean Turner,
 	Davide Vaghetti,
 	Niels van Dijk,
