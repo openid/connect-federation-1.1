@@ -1250,7 +1250,7 @@ li > p:last-of-type:only-child {
 <thead><tr>
 <td class="left"></td>
 <td class="center">OpenID Connect Federation 1.1</td>
-<td class="right">December 2025</td>
+<td class="right">January 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hedberg, et al.</td>
@@ -1265,7 +1265,7 @@ li > p:last-of-type:only-child {
 <dd class="workgroup">OpenID Connect Working Group</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-12-31" class="published">31 December 2025</time>
+<time datetime="2026-01-07" class="published">7 January 2026</time>
     </dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
@@ -1484,7 +1484,7 @@ li > p:last-of-type:only-child {
                     <p id="section-toc.1-1.12.2.2.2.5.1"><a href="#section-12.2.5" class="auto internal xref">12.2.5</a>.  <a href="#name-processing-explicit-client-r" class="internal xref">Processing Explicit Client Registration Response by RP</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2.2.6">
-                    <p id="section-toc.1-1.12.2.2.2.6.1"><a href="#section-12.2.6" class="auto internal xref">12.2.6</a>.  <a href="#name-after-an-explicit-client-re" class="internal xref">After an Explicit Client Registration</a></p>
+                    <p id="section-toc.1-1.12.2.2.2.6.1"><a href="#section-12.2.6" class="auto internal xref">12.2.6</a>.  <a href="#name-explicit-client-registration-" class="internal xref">Explicit Client Registration Lifetime</a></p>
 </li>
                 </ul>
 </li>
@@ -1495,7 +1495,7 @@ li > p:last-of-type:only-child {
                 <p id="section-toc.1-1.12.2.4.1"><a href="#section-12.4" class="auto internal xref">12.4</a>.  <a href="#name-differences-between-automat" class="internal xref">Differences between Automatic Registration and Explicit Registration</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.5">
-                <p id="section-toc.1-1.12.2.5.1"><a href="#section-12.5" class="auto internal xref">12.5</a>.  <a href="#name-rationale-for-the-trust-cha" class="internal xref">Rationale for the Trust Chain in the Request</a></p>
+                <p id="section-toc.1-1.12.2.5.1"><a href="#section-12.5" class="auto internal xref">12.5</a>.  <a href="#name-rationale-for-trust-chains-" class="internal xref">Rationale for Trust Chains in the Request</a></p>
 </li>
             </ul>
 </li>
@@ -1580,7 +1580,7 @@ li > p:last-of-type:only-child {
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.22.2.3">
-                <p id="section-toc.1-1.22.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-examples-of-the-two-ways-of" class="internal xref">Examples of the Two Ways of Doing Client Registration</a></p>
+                <p id="section-toc.1-1.22.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-client-registration-method-" class="internal xref">Client Registration Method Examples</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.22.2.3.2.1">
                     <p id="section-toc.1-1.22.2.3.2.1.1"><a href="#appendix-A.3.1" class="auto internal xref">A.3.1</a>.  <a href="#name-rp-sends-authentication-req" class="internal xref">RP Sends Authentication Request (Automatic Client Registration)</a></p>
@@ -1785,7 +1785,6 @@ li > p:last-of-type:only-child {
 <p id="section-3.2-1">
      Entity Statements MUST be validated in the manner defined in
      <span><a href="https://openid.github.io/federation-1.1/main.html#ESValidation" class="relref">Section 3.2</a> of [<a href="#OpenID.Federation-1.1" class="cite xref">OpenID.Federation-1.1</a>]</span>.
-     
      These additional validation steps are defined by this specification.
      These steps MAY be performed in a different order, provided that
      the result - accepting or rejecting the Entity Statement - is the same.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
@@ -2495,7 +2494,7 @@ GET /authorize?
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-authentication-request-usin" class="selfRef">Authentication Request Using Request Object</a>
+<a href="#name-authentication-request-usin" class="selfRef">Authentication Request using Request Object</a>
                 </figcaption></figure>
 <p id="section-12.1.1.1.1-7">
        When the <code>trust_chain</code> header parameter
@@ -3178,12 +3177,12 @@ HTTP/1.1 302 Found
                     registration is to make a new Explicit Registration
                     request. If the RP is provisioned with a
                     <code>registration_access_token</code> for
-                    some purpose, for example to let it independently check its
+                    some purpose, for example, to let it independently check its
                     registered metadata, the token MUST NOT allow modification
                     of the registration.<a href="#section-12.2.2-2.8.4" class="pilcrow">¶</a></p>
 <p id="section-12.2.2-2.8.5">
 
-                    The OP MAY modify the received RP metadata, for example by
+                    The OP MAY modify the received RP metadata, for example, by
                     substituting an invalid or unsupported parameter,
                     to make it compliant with its own OP metadata and other
                     policies. If the OP does not accept the RP metadata or is
@@ -3233,7 +3232,7 @@ HTTP/1.1 302 Found
      The parameters MUST include the
                     <code>client_id</code> that was provisioned
                     for the RP. If the RP was provisioned with credentials,
-                    for example a <code>client_secret</code>,
+                    for example, a <code>client_secret</code>,
                     these MUST be included as well.<a href="#section-12.2.3-4" class="pilcrow">¶</a></p>
 <p id="section-12.2.3-5">
                     The OP SHOULD include metadata parameters that have a
@@ -3419,7 +3418,7 @@ HTTP/1.1 302 Found
                     If the received registration Entity Statement does not pass the above
                     checks, the RP MUST reject it. The RP MAY choose to retry
                     the Explicit Registration request to work around a
-                    transient exception, for example due to a recent change of
+                    transient exception, for example, due to a recent change of
                     Entity metadata or metadata policy causing temporary
                     misalignment of metadata.<a href="#section-12.2.5-1.6.1" class="pilcrow">¶</a></p>
 </li>
@@ -3428,17 +3427,16 @@ HTTP/1.1 302 Found
 </div>
 <div id="AfterExplicitReg">
 <section id="section-12.2.6">
-          <h4 id="name-after-an-explicit-client-re">
-<a href="#section-12.2.6" class="section-number selfRef">12.2.6. </a><a href="#name-after-an-explicit-client-re" class="section-name selfRef">After an Explicit Client Registration</a>
+          <h4 id="name-explicit-client-registration-">
+<a href="#section-12.2.6" class="section-number selfRef">12.2.6. </a><a href="#name-explicit-client-registration-" class="section-name selfRef">Explicit Client Registration Lifetime</a>
           </h4>
 <p id="section-12.2.6-1">
             An RP can utilize the <code>exp</code> Claim of the
             registration Entity Statement to devise a suitable strategy for
             renewing its client registration. RP implementers should note that
-            if the OP expiration of the <code>client_id</code>
-            coincides with an OAuth 2.0 flow that was just initiated by the RP, this
-            may cause OpenID Connect authentication requests, token requests, or
-            UserInfo requests to suddenly fail. Renewing the RP registration
+            if the the RP's registration has expired at the OP,
+     this can cause OpenID Connect authentication requests, token requests,
+     and/or UserInfo requests to fail. Renewing the RP's registration
             prior to its expiration can prevent such errors from
             occurring and ensure the end-user experience is not disrupted.<a href="#section-12.2.6-1" class="pilcrow">¶</a></p>
 <p id="section-12.2.6-2">
@@ -3507,10 +3505,10 @@ HTTP/1.1 302 Found
         </ul>
 </section>
 </div>
-<div id="TrustChainParamRationale">
+<div id="TrustChainRationale">
 <section id="section-12.5">
-        <h3 id="name-rationale-for-the-trust-cha">
-<a href="#section-12.5" class="section-number selfRef">12.5. </a><a href="#name-rationale-for-the-trust-cha" class="section-name selfRef">Rationale for the Trust Chain in the Request</a>
+        <h3 id="name-rationale-for-trust-chains-">
+<a href="#section-12.5" class="section-number selfRef">12.5. </a><a href="#name-rationale-for-trust-chains-" class="section-name selfRef">Rationale for Trust Chains in the Request</a>
         </h3>
 <p id="section-12.5-1">
           Both Automatic and Explicit Client Registration support
@@ -3548,6 +3546,14 @@ HTTP/1.1 302 Found
             endpoint.<a href="#section-12.5-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
+<p id="section-12.5-3">
+   Both also support the submission of the Peer Trust Chain,
+   which provides a Trust Chain between the OP
+   and the Trust Anchor the RP selected.
+   As described in <span><a href="https://openid.github.io/federation-1.1/main.html#peer_trust_chain_head_param" class="relref">Section 4.4</a> of [<a href="#OpenID.Federation-1.1" class="cite xref">OpenID.Federation-1.1</a>]</span>,
+   inclusion of both Trust Chains enables achieving
+   the Federation Integrity and Metadata Integrity properties,
+   as defined in <span>[<a href="#App-Fed-Linkage" class="cite xref">App-Fed-Linkage</a>]</span>.<a href="#section-12.5-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3888,7 +3894,7 @@ HTTP/1.1 302 Found
         federation.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <p id="appendix-A-2" class="keepWithNext">
    The following depicts a federation under the eduGAIN Trust Anchor:<a href="#appendix-A-2" class="pilcrow">¶</a></p>
-<span id="name-participants-within-the-edu"></span><figure id="figure-7">
+<span id="name-participants-in-the-edugain"></span><figure id="figure-7">
         <div class="alignLeft art-text artwork" id="appendix-A-3.1">
 <pre>
                        eduGAIN
@@ -3903,7 +3909,7 @@ HTTP/1.1 302 Found
 </pre>
 </div>
 <figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
-<a href="#name-participants-within-the-edu" class="selfRef">Participants Within the eduGAIN Federation</a>
+<a href="#name-participants-in-the-edugain" class="selfRef">Participants in the eduGAIN Federation</a>
         </figcaption></figure>
 <p id="appendix-A-4">
         Both SWAMID and InCommon are identity federations in their own right.
@@ -4657,14 +4663,12 @@ Host: geant.org
 </div>
 <div id="ClientRegExample">
 <section id="appendix-A.3">
-        <h3 id="name-examples-of-the-two-ways-of">
-<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-examples-of-the-two-ways-of" class="section-name selfRef">Examples of the Two Ways of Doing Client Registration</a>
+        <h3 id="name-client-registration-method-">
+<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-client-registration-method-" class="section-name selfRef">Client Registration Method Examples</a>
         </h3>
 <p id="appendix-A.3-1">
-          As described in
-          <a href="#client_registration" class="auto internal xref">Section 12</a>,
-          there are two
-          ways that can be used to do client registration:<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
+          <a href="#client_registration" class="auto internal xref">Section 12</a> defines
+          two methods for performing client registration:<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlNewline" id="appendix-A.3-2">
           <dt id="appendix-A.3-2.1">Automatic</dt>
           <dd style="margin-left: 1.5em" id="appendix-A.3-2.2">
@@ -4725,7 +4729,7 @@ Host: op.umu.se
 </pre>
 </div>
 <figcaption><a href="#figure-22" class="selfRef">Figure 22</a>:
-<a href="#name-authentication-request-using" class="selfRef">Authentication Request Using Automatic Client Registration</a>
+<a href="#name-authentication-request-using" class="selfRef">Authentication Request using Automatic Client Registration</a>
             </figcaption></figure>
 <p id="appendix-A.3.1-4">
             The OP receiving this Authentication Request will, unless the
@@ -4884,7 +4888,7 @@ Host: op.umu.se
 </pre>
 </div>
 <figcaption><a href="#figure-25" class="selfRef">Figure 25</a>:
-<a href="#name-combined-metadata-with-meta" class="selfRef">Combined Metadata with Metadata Policy yet to be applied</a>
+<a href="#name-combined-metadata-with-meta" class="selfRef">Combined Metadata with Metadata Policy Yet to be Applied</a>
               </figcaption></figure>
 <p id="appendix-A.3.1.2-7" class="keepWithNext">
  The final result is:<a href="#appendix-A.3.1.2-7" class="pilcrow">¶</a></p>
@@ -5087,7 +5091,7 @@ Host: op.umu.se
 <a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-notices" class="section-name selfRef">Notices</a>
       </h2>
 <p id="appendix-B-1">
-        Copyright (c) 2025 The OpenID Foundation.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+        Copyright (c) 2026 The OpenID Foundation.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 <p id="appendix-B-2">
         The OpenID Foundation (OIDF) grants to any Contributor, developer,
         implementer, or other interested party a non-exclusive, royalty free,
@@ -5137,9 +5141,15 @@ Host: op.umu.se
 <ul class="normal">
 <li class="normal" id="appendix-C-3.1">
           <p id="appendix-C-3.1.1">
-     Began life as a copy of OpenID Federation 1.0 as of December 10, 2025.
-     The protocol-independent parts will be removed shortly,
-     and will live in the OpenID Federation 1.1 specification.<a href="#appendix-C-3.1.1" class="pilcrow">¶</a></p>
+     Began life as a copy of OpenID Federation 1.0 as of December 10, 2025.<a href="#appendix-C-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-3.2">
+          <p id="appendix-C-3.2.1">
+     Removed protocol-independent functionality.<a href="#appendix-C-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-3.3">
+          <p id="appendix-C-3.3.1">
+     Merged in changes made to OpenID Federation 1.0 as of January 7, 2026.<a href="#appendix-C-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
@@ -5209,6 +5219,7 @@ Host: op.umu.se
  Michael Schwartz,
  Giada Sciarretta,
  Amir Sharif,
+ Yaron Sheffer,
  Sean Turner,
  Davide Vaghetti,
  Niels van Dijk,
