@@ -77,7 +77,7 @@
       </address>
     </author>
 
-    <date day="19" month="January" year="2026"/>
+    <date day="20" month="January" year="2026"/>
 
     <workgroup>OpenID Connect Working Group</workgroup>
 
@@ -421,7 +421,7 @@
         <t>
           The <spanx style="verb">issuer</spanx> parameter value
           in the <spanx style="verb">openid_provider</spanx> metadata MUST
-          match the Federation Entity identifier
+          match the Federation Entity Identifier
           (the <spanx style="verb">iss</spanx> parameter within the Entity Configuration).
         </t>
 
@@ -550,7 +550,7 @@
         <t>
           The <spanx style="verb">issuer</spanx> parameter value
           in the <spanx style="verb">oauth_authorization_server</spanx> metadata MUST
-          match the Federation Entity identifier
+          match the Federation Entity Identifier
           (the <spanx style="verb">iss</spanx> Claim in the Entity Configuration).
         </t>
 
@@ -2162,7 +2162,7 @@ HTTP/1.1 302 Found
 	    </address>
 	  </author>
 
-          <date day="19" month="January" year="2026"/>
+          <date day="20" month="January" year="2026"/>
         </front>
       </reference>
 
@@ -2360,7 +2360,7 @@ HTTP/1.1 302 Found
 	    </address>
 	  </author>
 
-          <date day="19" month="January" year="2026"/>
+          <date day="20" month="January" year="2026"/>
         </front>
       </reference>
 
