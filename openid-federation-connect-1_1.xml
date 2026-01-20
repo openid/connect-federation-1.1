@@ -77,7 +77,7 @@
       </address>
     </author>
 
-    <date day="19" month="January" year="2026"/>
+    <date day="20" month="January" year="2026"/>
 
     <workgroup>OpenID Connect Working Group</workgroup>
 
@@ -359,15 +359,15 @@
 	  </name>
 	  <artwork><![CDATA[
     {
-      "iss": "https://openid.sunet.se",
-      "sub": "https://openid.sunet.se",
+      "iss": "https://rp.sunet.se",
+      "sub": "https://rp.sunet.se",
       "iat": 1516239022,
-      "exp": 1516298022,
+      "exp": 1516843822,
       "metadata": {
         "openid_relying_party": {
           "application_type": "web",
           "redirect_uris": [
-            "https://openid.sunet.se/rp/callback"
+            "https://rp.sunet.se/callback"
           ],
           "organization_name": "SUNET",
           "logo_uri": "https://www.sunet.se/sunet/images/32x32.png",
@@ -375,8 +375,8 @@
             "authorization_code",
             "implicit"
           ],
-          "signed_jwks_uri": "https://openid.sunet.se/rp/signed_jwks.jose",
-          "jwks_uri": "https://openid.sunet.se/rp/jwks.json",
+          "signed_jwks_uri": "https://rp.sunet.se/signed_jwks.jose",
+          "jwks_uri": "https://rp.sunet.se/jwks.json",
           "client_registration_types": ["automatic"]
         }
       },
@@ -385,9 +385,9 @@
           {
             "alg": "RS256",
             "e": "AQAB",
-            "kid": "key1",
+            "kid": "Ge7hs3smulgio8glvURJadmj...",
             "kty": "RSA",
-            "n": "pnXBOusEANuug6ewezb9J_...",
+            "n": "iE0ZGqI4TNopx52dGHm0EYhl...",
             "use": "sig"
           }
         ]
@@ -421,7 +421,7 @@
         <t>
           The <spanx style="verb">issuer</spanx> parameter value
           in the <spanx style="verb">openid_provider</spanx> metadata MUST
-          match the Federation Entity identifier
+          match the Federation Entity Identifier
           (the <spanx style="verb">iss</spanx> parameter within the Entity Configuration).
         </t>
 
@@ -470,8 +470,8 @@
    "metadata":{
       "openid_provider":{
          "issuer": "https://op.umu.se",
-         "signed_jwks_uri": "https://op.umu.se/openid/signed_jwks.jose",
-         "authorization_endpoint": "https://op.umu.se/openid/authorization",
+         "signed_jwks_uri": "https://op.umu.se/signed_jwks.jose",
+         "authorization_endpoint": "https://op.umu.se/authorization",
          "client_registration_types_supported":[
             "automatic",
             "explicit"
@@ -496,15 +496,15 @@
             "pairwise",
             "public"
          ],
-         "token_endpoint": "https://op.umu.se/openid/token",
-         "federation_registration_endpoint": "https://op.umu.se/openid/fedreg",
+         "token_endpoint": "https://op.umu.se/token",
+         "federation_registration_endpoint": "https://op.umu.se/fedreg",
          "token_endpoint_auth_methods_supported":[
             "client_secret_post",
             "client_secret_basic",
             "client_secret_jwt",
             "private_key_jwt"
          ],
-         "pushed_authorization_request_endpoint": "https://op.umu.se/openid/par",
+         "pushed_authorization_request_endpoint": "https://op.umu.se/par",
          "request_object_signing_alg_values_supported": [
             "ES256",
             "RS256"
@@ -550,7 +550,7 @@
         <t>
           The <spanx style="verb">issuer</spanx> parameter value
           in the <spanx style="verb">oauth_authorization_server</spanx> metadata MUST
-          match the Federation Entity identifier
+          match the Federation Entity Identifier
           (the <spanx style="verb">iss</spanx> Claim in the Entity Configuration).
         </t>
 
@@ -849,7 +849,7 @@
 {
   "typ": "oauth-authz-req+jwt",
   "alg": "RS256",
-  "kid": "that-kid-which-points-to-a-jwk-contained-in-the-trust-chain",
+  "kid": "kid-that-points-to-a-jwk-contained-in-the-trust-chain",
   "trust_chain" : [
     "eyJhbGciOiJSUzI1NiIsImtpZCI6Ims1NEhRdERpYnlHY3M5WldWTWZ2aUhm ...",
     "eyJhbGciOiJSUzI1NiIsImtpZCI6IkJYdmZybG5oQU11SFIwN2FqVW1BY0JS ...",
@@ -1803,7 +1803,7 @@ HTTP/1.1 302 Found
             An RP can utilize the <spanx style="verb">exp</spanx> Claim of the
             registration Entity Statement to devise a suitable strategy for
             renewing its client registration. RP implementers should note that
-            if the the RP's registration has expired at the OP,
+            if the RP's registration has expired at the OP,
 	    this can cause OpenID Connect authentication requests, token requests,
 	    and/or UserInfo requests to fail. Renewing the RP's registration
             prior to its expiration can prevent such errors from
@@ -2162,7 +2162,7 @@ HTTP/1.1 302 Found
 	    </address>
 	  </author>
 
-          <date day="19" month="January" year="2026"/>
+          <date day="20" month="January" year="2026"/>
         </front>
       </reference>
 
@@ -2294,7 +2294,7 @@ HTTP/1.1 302 Found
 	  <author fullname="Ken Whistler" initials="K." surname="Whistler">
 	  </author>
 
-	  <date day="12" month="August" year="2023" />
+	  <date day="30" month="July" year="2025" />
 	</front>
 
 	<seriesInfo name="Unicode Standard Annex" value="15" />
@@ -2360,7 +2360,7 @@ HTTP/1.1 302 Found
 	    </address>
 	  </author>
 
-          <date day="19" month="January" year="2026"/>
+          <date day="20" month="January" year="2026"/>
         </front>
       </reference>
 
@@ -2586,10 +2586,10 @@ HTTP/1.1 302 Found
   },
   "metadata": {
     "openid_provider": {
-      "issuer": "https://op.umu.se/openid",
-      "signed_jwks_uri": "https://op.umu.se/openid/jwks.jose",
+      "issuer": "https://op.umu.se",
+      "signed_jwks_uri": "https://op.umu.se/jwks.jose",
       "authorization_endpoint":
-        "https://op.umu.se/openid/authorization",
+        "https://op.umu.se/authorization",
       "client_registration_types_supported": [
         "automatic",
         "explicit"
@@ -2616,9 +2616,9 @@ HTTP/1.1 302 Found
         "pairwise",
         "public"
       ],
-      "token_endpoint": "https://op.umu.se/openid/token",
+      "token_endpoint": "https://op.umu.se/token",
       "federation_registration_endpoint":
-        "https://op.umu.se/openid/fedreg",
+        "https://op.umu.se/fedreg",
       "token_endpoint_auth_methods_supported": [
         "client_secret_post",
         "client_secret_basic",
@@ -2686,7 +2686,7 @@ Host: umu.se
   "metadata": {
     "federation_entity": {
       "contacts": ["ops@umu.se"],
-      "federation_fetch_endpoint": "https://umu.se/oidc/fedapi",
+      "federation_fetch_endpoint": "https://umu.se/openid/fedapi",
       "organization_uri": "https://www.umu.se",
       "organization_name": "UmU"
     }
@@ -2717,7 +2717,7 @@ Host: umu.se
 	      Request Subordinate Statement from https://umu.se about https://op.umu.se
 	    </name>
             <artwork><![CDATA[
-GET /oidc/fedapi?sub=https%3A%2F%2Fop.umu.se&
+GET /openid/fedapi?sub=https%3A%2F%2Fop.umu.se&
 iss=https%3A%2F%2Fumu.se HTTP/1.1
 Host: umu.se
 ]]></artwork>
@@ -2735,7 +2735,7 @@ Host: umu.se
   "iat": 1568310847,
   "iss": "https://umu.se",
   "sub": "https://op.umu.se",
-  "source_endpoint": "https://umu.se/oidc/fedapi",
+  "source_endpoint": "https://umu.se/openid/fedapi",
   "jwks": {
     "keys": [
       {
@@ -3118,13 +3118,13 @@ Host: geant.org
             <artwork><![CDATA[
 {
   "authorization_endpoint":
-    "https://op.umu.se/openid/authorization",
+    "https://op.umu.se/authorization",
   "contacts": [
     "ops@swamid.se",
     "ops@edugain.geant.org"
   ],
   "federation_registration_endpoint":
-    "https://op.umu.se/openid/fedreg",
+    "https://op.umu.se/fedreg",
   "client_registration_types_supported": [
     "automatic",
     "explicit"
@@ -3138,8 +3138,8 @@ Host: geant.org
     "RS256",
     "ES256"
   ],
-  "issuer": "https://op.umu.se/openid",
-  "signed_jwks_uri": "https://op.umu.se/openid/jwks.jose",
+  "issuer": "https://op.umu.se",
+  "signed_jwks_uri": "https://op.umu.se/jwks.jose",
   "logo_uri":
     "https://www.umu.se/img/umu-logo-left-neg-SE.svg",
   "organization_name": "University of Umeå",
@@ -3154,7 +3154,7 @@ Host: geant.org
   "subject_types_supported": [
     "pairwise"
   ],
-  "token_endpoint": "https://op.umu.se/openid/token",
+  "token_endpoint": "https://op.umu.se/token",
   "token_endpoint_auth_methods_supported": [
     "private_key_jwt",
     "client_secret_jwt"
@@ -3467,11 +3467,9 @@ Host: op.umu.se
       {
         "kty": "RSA",
         "use": "sig",
-        "kid":
-          "U2JTWHY0VFg0a2FEVVdTaHptVDJsNDNiSDk5MXRBVEtNSFVkeXZwb",
+        "kid": "U2JTWHY0VFg0a2FEVVdTaHptVDJsNDNiSDk5MXRBVEtNSFVkeXZwb",
         "e": "AQAB",
-        "n":
-          "4AZjgqFwMhTVSLrpzzNcwaCyVD88C_Hb3Bmor97vH-2AzldhuVb8K..."
+        "n": "4AZjgqFwMhTVSLrpzzNcwaCyVD88C_Hb3Bmor97vH-2AzldhuVb8K..."
       }
     ]
   },
@@ -3551,11 +3549,9 @@ Host: op.umu.se
       {
         "kty": "RSA",
         "use": "sig",
-        "kid":
-          "U2JTWHY0VFg0a2FEVVdTaHptVDJsNDNiSDk5MXRBVEtNSFVkeXZwb",
+        "kid": "U2JTWHY0VFg0a2FEVVdTaHptVDJsNDNiSDk5MXRBVEtNSFVkeXZwb",
         "e": "AQAB",
-        "n":
-          "4AZjgqFwMhTVSLrpzzNcwaCyVD88C_Hb3Bmor97vH-2AzldhuVb8K..."
+        "n": "4AZjgqFwMhTVSLrpzzNcwaCyVD88C_Hb3Bmor97vH-2AzldhuVb8K..."
       },
       {
         "kty": "EC",
@@ -3627,6 +3623,10 @@ Host: op.umu.se
 	  <t>
 	    Renamed this specification to OpenID Federation for OpenID Connect 1.1.
 	    It was previously named OpenID Connect Federation 1.1.
+	  </t>
+	  <t>
+	    Merged in changes made to OpenID Federation 1.0 between
+	    January 7 and January 19, 2026.
 	  </t>
 	</list>
       </t>
