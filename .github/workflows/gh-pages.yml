@@ -43,6 +43,7 @@ jobs:
       - name: install xml2rfc
         run: |
           pip install --upgrade pip
+          pip install sortedcontainers
           pip install xml2rfc
 
       - name: Show env
@@ -58,7 +59,7 @@ jobs:
         run: echo "$BRANCH_NAME"
 
       - name: build openid federation specs
-        run: xml2rfc --html openid-connect-federation-1_1.xml --out html/$BRANCH_NAME.html
+        run: xml2rfc --html openid-federation-connect-1_1.xml --out html/$BRANCH_NAME.html
 
       - name: Deploy to GitHub Pages
         if: success()
